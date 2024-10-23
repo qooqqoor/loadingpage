@@ -36,8 +36,15 @@ function Index() {
     <div className="w-full">
       <Background setQrCodeVisible={setQrCodeVisible} setRegisterModelVisible={setRegisterModelVisible}/>
       <QrcodeModal qrCodeVisible={qrCodeVisible} setQrCodeVisible={setQrCodeVisible}/>
-        <RegisterModel close={closeRegisterModel}/>
-      <RegisterSuccessModal registerSuccessModalVisible={registerSuccessModalVisible} setRegisterSuccessModalVisible={setRegisterSuccessModalVisible}/>
+        <RegisterModel
+          close={closeRegisterModel}
+          registerModelVisible={registerModelVisible}
+          setRegisterSuccessModalVisible={setRegisterSuccessModalVisible}
+        />
+      <RegisterSuccessModal
+        registerSuccessModalVisible={registerSuccessModalVisible}
+        setRegisterSuccessModalVisible={setRegisterSuccessModalVisible}
+      />
     </div>
   )
 }

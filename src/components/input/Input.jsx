@@ -10,7 +10,11 @@ const Input =
       extra,
       placeholder,
       readOnly = false,
-      pattern
+      pattern,
+      patternText,
+      maxLength,
+      minLength,
+      errorText
     } ) => {
     return (
       <div className={'w-full'}>
@@ -22,10 +26,15 @@ const Input =
                  placeholder={placeholder}
                  readOnly={readOnly}
                  pattern={pattern}
+                 maxLength={maxLength}
+                 minLength={minLength}
           />
           {extra && (extra)}
 
         </div>
+        <div className={`${patternText ? 'h-auto opacity-100' : 'h-0'} opacity-0 transition-all text-xs text-[#FF0000]`}>{patternText}</div>
+        <div className={`${errorText ? 'h-auto opacity-100' : 'h-0'} opacity-0 transition-all text-xs text-[#FF0000]`}>{errorText}</div>
+
       </div>
     )
   }

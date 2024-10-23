@@ -10,7 +10,7 @@ import eyeOpen from '../../assets/button/login_btn_eye_open.png'
 import closeImg from '../../assets/button/popup_btn_close.png'
 import plusImg from '../../assets/button/anchor_btn_add.png'
 
-const RegisterModel = ( { close, registerModelVisible } ) => {
+const RegisterModel = ( { close, registerModelVisible,setRegisterSuccessModalVisible } ) => {
   const passRef = useRef(null)
   const [step, setStep] = useState('1');
   const [area, setArea] = useState([]);
@@ -20,6 +20,8 @@ const RegisterModel = ( { close, registerModelVisible } ) => {
   const [gender, setGender] = useState([]);
   const [isShowPassword, setIsShowPassword] = useState(false);
   const [inputRules, setInputRules] = useState({});
+  const [inputRulesText, setInputRulesText] = useState({});
+  const [phoneExist, setPhoneExist] = useState(null);
   const [registerInfo, setRegisterInfo] = useState({
     country: '',
     phone: null,
@@ -34,7 +36,6 @@ const RegisterModel = ( { close, registerModelVisible } ) => {
     headshotUrl: null,
     phoneCode: ''
   });
-  console.log(registerInfo,'registerInfo')
   const [validRegisterStep1, setValidRegisterStep1] = useState({
     phoneCode: false,
     phone: false,
@@ -63,6 +64,7 @@ const RegisterModel = ( { close, registerModelVisible } ) => {
     const res = await apiRequest('get', 'api/user/app/passport/doRegister.html');
     if (res.success) {
       setInputRules(res.jsonValid.rules)
+      setInputRulesText(res.jsonValid.messages)
     }
   }
 
@@ -141,15 +143,15 @@ const RegisterModel = ( { close, registerModelVisible } ) => {
     }
   }
 
-  const selectHandleChange = (e, type = null ) =>{
+  const selectHandleChange = ( e, type = null ) => {
     const parmas = {}
     //這邊也是一次階段驗證
     if (type === 'phoneCode') {
       validate('phoneCode', e.value, inputRules.cellPhone.callingCode)
       parmas['country'] = e.key
-   } else if (type === 'gender') {
-     setValidRegisterStep1({ ...validRegisterStep1, gender: !!e.value ? true : false })
-   }
+    } else if (type === 'gender') {
+      setValidRegisterStep1({ ...validRegisterStep1, gender: !!e.value ? true : false })
+    }
 
 
     parmas[type] = e.value
@@ -159,13 +161,14 @@ const RegisterModel = ( { close, registerModelVisible } ) => {
   const handleChange = ( e, type = null ) => {
     const val = e.target.value;
     const parmas = {}
+    setPhoneExist(null)
     //一次階段驗證
     if (type === 'phone') {
       validate('phone', val, inputRules.cellPhone.pattern)
-    }  else if (type === 'password') {
-      validate('password', val, inputRules.cellPhone.password)
+    } else if (type === 'password') {
+      validate('password', val, inputRules.password.pattern)
     } else if (type === 'nickname') {
-      validate('nickname', val, inputRules.cellPhone.nickname)
+      validate('nickname', val, inputRules.nickname.pattern)
     } else if (type === 'email') {
       const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
       validate('email', val, emailRegex)
@@ -208,8 +211,25 @@ const RegisterModel = ( { close, registerModelVisible } ) => {
         "email": registerInfo.email,
         "country": registerInfo.country
       });
-    console.log(res)
+    if (res.success){
+      setRegisterSuccessModalVisible(true)
+      close()
+    }
   }
+
+  const goStep2 = async () => {
+    //這個API沒辦法搓 很奇怪
+
+    // const res = await apiRequest('post', '/api/user/app/passport/cellPhoneExistsForRegister.html',{
+    //   callingCode: registerInfo.phoneCode,
+    //   cellPhone: registerInfo.phone
+    // })
+    // if(!!res){
+      setStep('2')
+    // }else {
+    setPhoneExist(inputRulesText.cellPhone.remote)
+  // }
+}
 
 
   const Photos = ( { image, id, altText } ) => {
@@ -267,6 +287,8 @@ const RegisterModel = ( { close, registerModelVisible } ) => {
                 onChange={e => handleChange(e, 'phone')}
                 placeholder={'请输入手机号'}
                 pattern={inputRules.cellPhone.pattern}
+                patternText={!validRegisterStep1.phone && registerInfo.phone && inputRulesText.cellPhone.pattern}
+                errorText={phoneExist}
               />
               <Input
                 label={'密碼'}
@@ -279,6 +301,8 @@ const RegisterModel = ( { close, registerModelVisible } ) => {
                     <img className={'w-full h-full'} src={isShowPassword ? eyeOpen : eyeClose}/>
                   </div>
                 }
+                pattern={inputRules.password.pattern}
+                patternText={!validRegisterStep1.password && registerInfo.password && inputRulesText.password.pattern}
               />
               <Input
                 label={'暱稱'}
@@ -286,6 +310,10 @@ const RegisterModel = ( { close, registerModelVisible } ) => {
                 type={'text'}
                 onChange={e => handleChange(e, 'nickname')}
                 placeholder={'请输入昵称'}
+                pattern={inputRules.nickname.pattern}
+                maxLength={inputRules.nickname.maxlength}
+                minLength={inputRules.nickname.minlength}
+                patternText={!validRegisterStep1.nickname && registerInfo.nickname && inputRulesText.nickname.maxlength}
               />
               <SelectInput
                 label={'性別'}
@@ -302,12 +330,14 @@ const RegisterModel = ( { close, registerModelVisible } ) => {
                 type={'email'}
                 onChange={e => handleChange(e, 'email')}
                 placeholder={'請輸入郵箱'}
+                pattern={/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/}
+                patternText={!validRegisterStep1.email && registerInfo.email && '請輸入有效的電子郵件地址，例如：example@example.com'}
               />
 
               <Button
                 text={'下一步'}
                 validObj={validRegisterStep1}
-                onClick={() => setStep('2')}
+                onClick={() => goStep2()}
               />
 
             </div>
@@ -355,7 +385,7 @@ const RegisterModel = ( { close, registerModelVisible } ) => {
 
             <Button
               text={'註冊'}
-              validObj={validRegisterStep2}
+              validObj={true}
               onClick={() => omSubmit()}
             />
           </div>

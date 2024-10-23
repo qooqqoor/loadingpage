@@ -7,6 +7,23 @@
     src: url('./assets/fonts/Roboto-Regular.ttf') ;
 
 }
+button,
+input,
+optgroup,
+textarea,
+select {
+    border: none;
+    background-image: none;
+    background-color: transparent;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+    border-color: transparent;
+    color: initial;
+    outline-style: none;
+    padding-block: 0;
+    padding-inline: 0;
+}
 
 html,
 body {
