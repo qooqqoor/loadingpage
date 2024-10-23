@@ -19,5 +19,8 @@ const updateViewportContent = () => {
 
   // sm 下等比縮小配置
 }
+function onGestureStart(ev) {
+  ev.preventDefault() // 阻止縮放手勢
+}
 
-export {updateViewportContent}
+export {updateViewportContent,onGestureStart}
