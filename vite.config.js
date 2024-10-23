@@ -13,11 +13,6 @@ export default defineConfig({
         target: 'https://ssstnk.xuanfeidianzi.com', // 目標 API
         changeOrigin: true, // 修改請求的來源
       },
-      '/form': {
-        target: 'https://ssstnk.xuanfeidianzi.com', // 目標 API
-        changeOrigin: true, // 修改請求的來源
-        rewrite: (path) => path.replace(/^\/form/, ''), // 移除 `/apis` 前綴
-      },
     },
   },
 })
