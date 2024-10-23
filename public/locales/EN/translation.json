@@ -26,5 +26,6 @@
   "frontSide": "Front Side",
   "backSide": "Back Side",
   "closeUpPhoto": "Close-up photo, please provide a front-facing facial photo",
-  "register": "Register"
+  "register": "Register",
+  "emailErrorMessage": "Please enter a valid email address, for example: example@example.com "
 }

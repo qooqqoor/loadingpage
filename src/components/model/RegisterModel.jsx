@@ -334,7 +334,7 @@ const RegisterModel = ( { close, registerModelVisible,setRegisterSuccessModalVis
                 onChange={e => handleChange(e, 'email')}
                 placeholder={t('pleaseEnterEmail')}
                 pattern={/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/}
-                patternText={!validRegisterStep1.email && registerInfo.email && '請輸入有效的電子郵件地址，例如：example@example.com'}
+                patternText={!validRegisterStep1.email && registerInfo.email && t('emailErrorMessage')}
               />
 
               <Button
