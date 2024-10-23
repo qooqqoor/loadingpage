@@ -50,6 +50,7 @@ const RegisterModel = ( { close } ) => {
     headshotUrl: false
   });
 
+
   useEffect(() => {
     getContextInfo()
     getGender()
@@ -140,23 +141,33 @@ const RegisterModel = ( { close } ) => {
     }
   }
 
+  const selectHandleChange = (e, type = null ) =>{
+    const parmas = {}
+
+    if (type === 'country') {
+      validate('country', e.value, inputRules.cellPhone.callingCode)
+   } else if (type === 'gender') {
+     setValidRegisterStep1({ ...validRegisterStep1, gender: !!e.value ? true : false })
+   }
+
+    parmas[type] = e.value
+    setRegisterInfo({ ...registerInfo, ...parmas });
+  }
+
   const handleChange = ( e, type = null ) => {
     const val = e.target.value;
     const parmas = {}
     if (type === 'phone') {
       validate('phone', val, inputRules.cellPhone.pattern)
-    } else if (type === 'country') {
-      validate('country', val, inputRules.cellPhone.callingCode)
-    } else if (type === 'password') {
+    }  else if (type === 'password') {
       validate('password', val, inputRules.cellPhone.password)
     } else if (type === 'nickname') {
       validate('nickname', val, inputRules.cellPhone.nickname)
     } else if (type === 'email') {
       const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
       validate('email', val, emailRegex)
-    } else if (type === 'gender') {
-      setValidRegisterStep1({ ...validRegisterStep1, gender: !!val ? true : false })
     }
+
     //第二階段驗證 後端驗證API沒給正則 先有值就過
     else if (type === 'realname') {
       setValidRegisterStep2({ ...validRegisterStep2, realname: !!val ? true : false })
@@ -230,29 +241,18 @@ const RegisterModel = ( { close } ) => {
         </div>
         <div id="title" className="font-bold text-lg py-1 mb-4">成為主播</div>
         <div className="bg-e10 w-full h-[1px] mb-2"></div>
-        <form>
           {step === '1' && (
             <div id="step1" className="w-full ">
 
               <SelectInput
                 label={'國家和地區'}
-                value={registerInfo.country}
+                value={area.find(e =>e.value === registerInfo.country)?.name || ''}
                 type={'text'}
-                onChange={e => handleChange(e, 'country')}
+                currentType={'country'}
+                onChange={selectHandleChange}
                 placeholder={'請選擇'}
+                optionList={area}
               />
-
-              <label className="text-sm">國家和地區</label>
-              <select value={registerInfo.country} onChange={e => handleChange(e, 'country')}
-                      className="w-full my-2 px-2 h-11 bg-e08">
-                <option key={0} value={''}>請選擇</option>
-                {area.map(( item, index ) => {
-                  return (
-                    <option key={index + 1} value={item.value}>{item.name}</option>
-                  )
-                })}
-              </select>
-
               <Input
                 label={'手機號'}
                 value={registerInfo.phone}
@@ -265,6 +265,7 @@ const RegisterModel = ( { close } ) => {
                 value={registerInfo.password}
                 type={isShowPassword ? 'text' : 'password'}
                 onChange={e => handleChange(e, 'password')}
+                placeholder={'请输入密码'}
                 extra={
                   <div className={'h-4.5 w-4.5  absolute right-5 top-[50%] translate-y-[-50%]'} onClick={showPassword}>
                     <img className={'w-full h-full'} src={isShowPassword ? eyeOpen : eyeClose}/>
@@ -278,17 +279,15 @@ const RegisterModel = ( { close } ) => {
                 onChange={e => handleChange(e, 'nickname')}
                 placeholder={'请输入昵称'}
               />
-
-              <label className="text-sm">性別</label>
-              <select className="w-full my-2 px-2 h-11 bg-e08" value={registerInfo.gender}
-                      onChange={e => handleChange(e, 'gender')}>
-                <option key={0} value={''}>請選擇性別</option>
-                {/* 預設空值或提示 */}
-                {gender.map(( item, index ) => (
-                  <option key={index + 1} value={item.value}>{item.value}</option>
-                ))}
-              </select>
-
+              <SelectInput
+                label={'性別'}
+                value={registerInfo.gender}
+                type={'text'}
+                currentType={'gender'}
+                onChange={selectHandleChange}
+                placeholder={'請選擇性別'}
+                optionList={gender}
+              />
               <Input
                 label={'郵箱'}
                 value={registerInfo.email}
@@ -306,7 +305,6 @@ const RegisterModel = ( { close } ) => {
             </div>
 
           )}
-        </form>
         {step === '2' && (
           <div id="step1" className="w-full ">
             <Input

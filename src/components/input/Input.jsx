@@ -12,9 +12,9 @@ const Input =
       readOnly = false
     } ) => {
     return (
-      <>
+      <div className={'w-full'}>
         <label className="text-sm">{label}</label>
-        <div className={'relative'}>
+        <div className={'relative z-0'}>
           <input className="w-full my-1.5 px-2 h-11 bg-e08 rounded-1" type={type}
                  value={value}
                  onChange={onChange}
@@ -24,7 +24,7 @@ const Input =
           {extra && (extra)}
 
         </div>
-      </>
+      </div>
     )
   }
 
