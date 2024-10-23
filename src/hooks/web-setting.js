@@ -6,14 +6,14 @@ const updateViewportContent = () => {
 
   if (mediaQueryList.matches) {
     meta.content =
-      'width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, viewport-fit=cover'
+      'width=568, initial-scale=1, minimum-scale=1, maximum-scale=1, viewport-fit=cover'
     return
   } else {
-    if (outerHeight <= 569) {
-      meta.content = 'width=569, user-scalable=no, viewport-fit=cover'
+    if (outerHeight <= 568) {
+      meta.content = 'width=375, user-scalable=no, viewport-fit=cover'
     } else {
       meta.content =
-        'width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, viewport-fit=cover'
+        'width=568, initial-scale=1, minimum-scale=1, maximum-scale=1, viewport-fit=cover'
     }
   }
 
