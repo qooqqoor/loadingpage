@@ -9,6 +9,7 @@ function Index() {
 
   const [registerModelVisible, setRegisterModelVisible] = useState(true);
   const [qrCodeVisible, setQrCodeVisible] = useState(false);
+  const mediaQueryList = window.matchMedia('(orientation: landscape)')
 
   const closeRegisterModel = () => {
     setRegisterModelVisible(false)
@@ -18,10 +19,12 @@ function Index() {
     updateViewportContent()
     window.addEventListener('DOMContentLoaded', updateViewportContent)
     window.addEventListener('resize', updateViewportContent)
+    mediaQueryList.addEventListener('change', updateViewportContent)
     document.body.addEventListener('gesturestart', onGestureStart)
     return()=>{
       window.removeEventListener('DOMContentLoaded', updateViewportContent)
       window.removeEventListener('resize', updateViewportContent)
+      mediaQueryList.removeEventListener('change', updateViewportContent)
       document.body.removeEventListener('gesturestart', onGestureStart)
 
     }
