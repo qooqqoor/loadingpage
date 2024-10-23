@@ -19,8 +19,8 @@ i18n
 
 // i18n範例
 // const { t, i18n } = useTranslation();
-// i18n.changeLanguage('en');
-//     sessionStorage.setItem('local','en')
+// i18n.changeLanguage('EN');
+//     sessionStorage.setItem('local','EN')
 // <div className={'bg-white'}> {t('becomeHost')}</div>
 
 

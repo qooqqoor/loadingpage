@@ -11,3 +11,12 @@
 html ,body{
     font-family: roboto , sans-serif, serif;
 }
+
+
+html.no-scroll body {
+    overflow: hidden !important; /* 禁止页面滚动 */
+}
+html.no-scroll.min-ios14 body {
+    touch-action: none;
+    position: fixed;
+}
