@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import apiRequest from "../../hooks/apis/apiInterceptors.js";
 import Input from "../input/Input.jsx";
+import Button from "../button/Button.jsx";
 
 import eyeClose from '../../assets/button/login_btn_eye_close.png'
 import eyeOpen from '../../assets/button/login_btn_eye_open.png'
@@ -9,7 +10,7 @@ import plusImg from '../../assets/button/anchor_btn_add.png'
 
 const RegisterModel = ( { close } ) => {
   const passRef = useRef(null)
-  const [step, setStep] = useState(null);
+  const [step, setStep] = useState('1');
   const [area, setArea] = useState([]);
   const [frontendIDImage, setFrontendIDImage] = useState(null);
   const [backendIDImage, setBackendIDImage] = useState(null);
@@ -26,6 +27,9 @@ const RegisterModel = ( { close } ) => {
     gender: '',
     realname: null,
     idCode: null,
+    frontIDUrl:null,
+    backIDUrl:null,
+    headshotUrl:null,
   });
 
   const [validRegisterStep1, setValidRegisterStep1] = useState({
@@ -37,8 +41,15 @@ const RegisterModel = ( { close } ) => {
     gender: false,
   });
 
+  const [validRegisterStep2, setValidRegisterStep2] = useState({
+    realname: false,
+    idCode: false,
+    frontIDUrl:false,
+    backIDUrl:false,
+    headshotUrl:false
+  });
+
   useEffect(() => {
-    setStep("1")
     getContextInfo()
     getGender()
     getDoRegister()
@@ -51,7 +62,6 @@ const RegisterModel = ( { close } ) => {
     }
   }
 
-  console.log(inputRules)
 
   useEffect(() => {
     if (!!passRef.current) {
@@ -82,15 +92,30 @@ const RegisterModel = ( { close } ) => {
       formData.append('file', file); // 將文件添加到 FormData 中
       try {
         const response = await apiRequest('post', `/api/user/file/upload.html?objId=objId&catePath=anchorManagement`, formData);
+        console.log(response,'response')
 
-        console.log('上傳成功:', response.data);
+        if (response.success) {
+          if (pic === 'frontendID') {
+            setRegisterInfo({...registerInfo, frontIDUrl: response.model})
+            setValidRegisterStep2({...validRegisterStep2, frontIDUrl: true})
+          } else if (pic === 'backendID') {
+            setRegisterInfo({...registerInfo, backIDUrl: response.model})
+            setValidRegisterStep2({...validRegisterStep2, backIDUrl: true})
+          } else if (pic === 'headshot') {
+            setRegisterInfo({...registerInfo, headshotUrl: response.model})
+            setValidRegisterStep2({...validRegisterStep2, headshotUrl: true})
+          }
+          console.log('上傳成功:', response.data);
+        }
+
+
       } catch (error) {
         console.error('上傳失敗:', error);
       }
 
     }
   };
-
+  console.log(validRegisterStep2,'validRegisterStep2')
   const getContextInfo = async () => {
     const res = await apiRequest('post', '/api/user/context/contextInfo.html');
     if (res.success) {
@@ -131,6 +156,13 @@ const RegisterModel = ( { close } ) => {
     }else if(type === 'gender'){
       setValidRegisterStep1({...validRegisterStep1, gender: !!val ? true : false})
     }
+    //第二階段驗證 後端驗證API沒給正則 先有值就過
+    else if(type === 'realname'){
+      setValidRegisterStep2({...validRegisterStep2, realname: !!val ? true : false})
+    }else if(type === 'idCode'){
+      setValidRegisterStep2({...validRegisterStep2, idCode: !!val ? true : false})
+    }
+
     parmas[type] = val
     setRegisterInfo({ ...registerInfo, ...parmas });
   }
@@ -141,11 +173,27 @@ const RegisterModel = ( { close } ) => {
       validParam[type] = regex.test(val)
       setValidRegisterStep1({...validRegisterStep1,...validParam})
   }
-  console.log(validRegisterStep1)
   const showPassword = () => {
     setIsShowPassword(!isShowPassword)
   }
 
+  const omSubmit = async () =>{
+    const res = await apiRequest('post', '/api/user/app/passport/anchorRegisterQuickly.html',
+      {
+        "realName": registerInfo.realname,
+        "password": registerInfo.password,
+        "idCardFrontUrl": registerInfo.frontIDUrl,
+        "idCard": registerInfo.idCode,
+        "sex": registerInfo.gender,
+        "nickname": registerInfo.nickname,
+        "phoneCode": registerInfo.country,
+        "halfPhotoUrl": registerInfo.headshotUrl,
+        "phoneNum": registerInfo.phone,
+        "idCardBackUrl": registerInfo.backIDUrl,
+        "email": registerInfo.email
+      });
+    console.log(res)
+  }
 
 
   const Photos = ( { image, id, altText } ) => {
@@ -246,18 +294,12 @@ const RegisterModel = ( { close } ) => {
               placeholder={'請輸入郵箱'}
             />
 
-            <button
-              className={`w-full mt-3 rounded-2 flex items-center justify-center px-2 h-11 text-a19
-              ${Object.values(validRegisterStep1).every(value => value === true) 
-                ? 'bg-e08 bg-gradient-to-t from-b02-1 to-b02-2 ' 
-                : 'bg-e11'}`}
-              disabled={!Object.values(validRegisterStep1).every(value => value === true)}
-              onClick={() => {
-                setStep('2')
-              }}
-            >
-              下一步
-            </button>
+            <Button
+              text={'下一步'}
+              validObj={validRegisterStep1}
+              onClick={() =>setStep('2')}
+            />
+
           </div>
 
         )}
@@ -302,14 +344,11 @@ const RegisterModel = ( { close } ) => {
             />
           </div>
 
-          <div
-            className="rounded-2 flex items-center justify-center px-2 h-11 bg-e08 bg-gradient-to-t from-b02-1 to-b02-2 text-a19"
-            onClick={() => {
-              setStep('2')
-            }}
-          >
-            註冊
-          </div>
+          <Button
+            text={'註冊'}
+            validObj={validRegisterStep2}
+            onClick={() =>omSubmit()}
+          />
         </div>
       )}
     </div>
