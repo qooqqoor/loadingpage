@@ -86,7 +86,7 @@ const LangButton = () =>{
     }}
     onClick={()=>setShow(e=>!e)}
     >
-      <p className={' text-[#FFFFFF] text-[12px] leading-[14.5px] mr-[14px] font-bold'}>{language}</p>
+      <p className={' text-[#FFFFFF] text-[12px] leading-[14.5px] mr-[14px] font-bold '}>{language}</p>
       <img src={show?`/images/common/btn_arrow_open.png`:`/images/common/btn_arrow_close.png`} className={'h-auto  w-[12px] '} alt="" draggable="false"/>
 
       <div className={'absolute bottom-[-28.4%] rounded-[14px] py-[7px] w-full  translate-y-[100%] transition-all  bg-[rgba(255,255,255,0.8)]'} style={{opacity: show? '100': '0'}}>

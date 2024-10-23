@@ -8,10 +8,33 @@
 
 }
 
-html ,body{
+html,
+body {
+    position: relative;
+    padding: 0;
+    margin: 0;
+    height: 100%;
+    width: 100%;
+    max-width: 100%;
     font-family: roboto , sans-serif, serif;
+    overflow-x: visible;
+    -webkit-overflow-scrolling: touch;
+    overflow-scrolling: touch;
 }
 
+html,
+body {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: auto;
+}
+
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+    display: none;
+    scrollbar-width: none;
+}
 
 html.no-scroll body {
     overflow: hidden !important; /* 禁止页面滚动 */
