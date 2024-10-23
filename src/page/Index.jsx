@@ -7,7 +7,7 @@ import {QrcodeModal} from "../components/qrcode-modal/index.jsx";
 
 function Index() {
 
-  const [registerModelVisible, setRegisterModelVisible] = useState(true);
+  const [registerModelVisible, setRegisterModelVisible] = useState(false);
   const [qrCodeVisible, setQrCodeVisible] = useState(false);
 
   const closeRegisterModel = () => {
@@ -29,11 +29,9 @@ function Index() {
 
   return (
     <div className="w-full">
-      <Background setQrCodeVisible={setQrCodeVisible}/>
+      <Background setQrCodeVisible={setQrCodeVisible} setRegisterModelVisible={setRegisterModelVisible}/>
       <QrcodeModal qrCodeVisible={qrCodeVisible} setQrCodeVisible={setQrCodeVisible}/>
-      {/*{registerModelVisible && (*/}
-      {/*  <RegisterModel close={closeRegisterModel}/>*/}
-      {/*)}*/}
+        <RegisterModel close={closeRegisterModel} registerModelVisible={registerModelVisible}/>
     </div>
   )
 }

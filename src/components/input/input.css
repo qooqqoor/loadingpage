@@ -2,3 +2,6 @@
 ::placeholder{
     font-size: 14px;
 }
+input:invalid {
+    border: red solid 3px;
+}

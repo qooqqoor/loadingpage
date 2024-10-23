@@ -1,7 +1,7 @@
 import {useTranslation} from "react-i18next";
 import {useState} from "react";
 
-const Background = ({setQrCodeVisible}) =>{
+const Background = ({setQrCodeVisible ,setRegisterModelVisible}) =>{
   const { t, i18n } = useTranslation();
   const {language} = i18n
 
@@ -22,7 +22,7 @@ const Background = ({setQrCodeVisible}) =>{
         <LangButton/>
        <div className={'z-1 absolute w-full pb-[20%] translate-y-[-100%] overflow-hidden'}>
          <div className={'absolute bottom-0 h-full cursor-pointer transition-all hover:scale-105 active:scale-95'}
-         style={{left: language === "CN" ? '1.86%' : language === "TL" ?'-1%': '0'}}>
+         style={{left: language === "CN" ? '1.86%' : language === "TL" ?'-1%': '0'}} onClick={()=>setRegisterModelVisible(true)}>
            <img src={`/images/${language}/btn_registeranchor.png`} className={'h-full w-auto '} alt="" draggable="false"/>
          </div>
          <div className={'absolute bottom-0 h-full cursor-pointer transition-all hover:scale-105 active:scale-95'}

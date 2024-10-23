@@ -3,13 +3,14 @@ import apiRequest from "../../hooks/apis/apiInterceptors.js";
 import Input from "../input/Input.jsx";
 import Button from "../button/Button.jsx";
 import SelectInput from "../select/SelectInput.jsx";
+import { Modal } from "./index.jsx";
 
 import eyeClose from '../../assets/button/login_btn_eye_close.png'
 import eyeOpen from '../../assets/button/login_btn_eye_open.png'
 import closeImg from '../../assets/button/popup_btn_close.png'
 import plusImg from '../../assets/button/anchor_btn_add.png'
 
-const RegisterModel = ( { close } ) => {
+const RegisterModel = ( { close, registerModelVisible } ) => {
   const passRef = useRef(null)
   const [step, setStep] = useState('1');
   const [area, setArea] = useState([]);
@@ -31,10 +32,11 @@ const RegisterModel = ( { close } ) => {
     frontIDUrl: null,
     backIDUrl: null,
     headshotUrl: null,
+    phoneCode: ''
   });
-
+  console.log(registerInfo,'registerInfo')
   const [validRegisterStep1, setValidRegisterStep1] = useState({
-    country: false,
+    phoneCode: false,
     phone: false,
     password: false,
     email: false,
@@ -94,7 +96,6 @@ const RegisterModel = ( { close } ) => {
       formData.append('file', file); // 將文件添加到 FormData 中
       try {
         const response = await apiRequest('post', `/api/user/file/upload.html?objId=objId&catePath=anchorManagement`, formData);
-        console.log(response, 'response')
 
         if (response.success) {
           if (pic === 'frontendID') {
@@ -117,7 +118,6 @@ const RegisterModel = ( { close } ) => {
 
     }
   };
-  console.log(validRegisterStep2, 'validRegisterStep2')
   const getContextInfo = async () => {
     const res = await apiRequest('post', '/api/user/context/contextInfo.html');
     if (res.success) {
@@ -143,12 +143,14 @@ const RegisterModel = ( { close } ) => {
 
   const selectHandleChange = (e, type = null ) =>{
     const parmas = {}
-
-    if (type === 'country') {
-      validate('country', e.value, inputRules.cellPhone.callingCode)
+    //這邊也是一次階段驗證
+    if (type === 'phoneCode') {
+      validate('phoneCode', e.value, inputRules.cellPhone.callingCode)
+      parmas['country'] = e.key
    } else if (type === 'gender') {
      setValidRegisterStep1({ ...validRegisterStep1, gender: !!e.value ? true : false })
    }
+
 
     parmas[type] = e.value
     setRegisterInfo({ ...registerInfo, ...parmas });
@@ -157,6 +159,7 @@ const RegisterModel = ( { close } ) => {
   const handleChange = ( e, type = null ) => {
     const val = e.target.value;
     const parmas = {}
+    //一次階段驗證
     if (type === 'phone') {
       validate('phone', val, inputRules.cellPhone.pattern)
     }  else if (type === 'password') {
@@ -198,11 +201,12 @@ const RegisterModel = ( { close } ) => {
         "idCard": registerInfo.idCode,
         "sex": registerInfo.gender,
         "nickname": registerInfo.nickname,
-        "phoneCode": registerInfo.country,
+        "phoneCode": registerInfo.phoneCode,
         "halfPhotoUrl": registerInfo.headshotUrl,
         "phoneNum": registerInfo.phone,
         "idCardBackUrl": registerInfo.backIDUrl,
-        "email": registerInfo.email
+        "email": registerInfo.email,
+        "country": registerInfo.country
       });
     console.log(res)
   }
@@ -218,7 +222,9 @@ const RegisterModel = ( { close } ) => {
           </label>
         )}
         {image && (
-          <img src={image} alt="Captured" className="m-auto flex-1 h-24 "/>
+          <label htmlFor={id}>
+            <img  src={image} alt="Captured" className="m-auto flex-1 h-24 "/>
+          </label>
         )}
         <input
           id={id}
@@ -233,6 +239,7 @@ const RegisterModel = ( { close } ) => {
   if (area.length === 0) return
 
   return (
+    <Modal visible={registerModelVisible} closeMaskCancel onCancel={()=>close} animationType={'fadeIn'} className={'w-80'}>
     <div className={'fixed top-0 right-0 left-0 bottom-0 z-2 flex justify-center items-center'}>
       <div className=" relative p-6 bg-e01 w-80 h-auto rounded-2 flex flex-col justify-center items-center ">
         <div className={'w-7 h-7 bg-e03 rounded-1 absolute right-4 top-4 flex justify-center items-center'}
@@ -246,9 +253,9 @@ const RegisterModel = ( { close } ) => {
 
               <SelectInput
                 label={'國家和地區'}
-                value={area.find(e =>e.value === registerInfo.country)?.name || ''}
+                value={area.find(e =>e.value === registerInfo.phoneCode)?.name || ''}
                 type={'text'}
-                currentType={'country'}
+                currentType={'phoneCode'}
                 onChange={selectHandleChange}
                 placeholder={'請選擇'}
                 optionList={area}
@@ -259,6 +266,7 @@ const RegisterModel = ( { close } ) => {
                 type={'tel'}
                 onChange={e => handleChange(e, 'phone')}
                 placeholder={'请输入手机号'}
+                pattern={inputRules.cellPhone.pattern}
               />
               <Input
                 label={'密碼'}
@@ -354,6 +362,7 @@ const RegisterModel = ( { close } ) => {
         )}
       </div>
     </div>
+    </Modal>
   )
 }
 
