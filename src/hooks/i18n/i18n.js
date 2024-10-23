@@ -9,9 +9,9 @@ i18n
     backend: {
       loadPath: "/locales/{{lng}}/{{ns}}.json",
     },
-    fallbackLng: "ch",
+    fallbackLng: "CN",
     // 預設語言
-    lng: sessionStorage.getItem('local') || "ch",
+    lng: sessionStorage.getItem('local') || "CN",
     interpolation: {
       escapeValue: false,
     },
