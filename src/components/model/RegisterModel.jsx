@@ -4,6 +4,7 @@ import Input from "../input/Input.jsx";
 import Button from "../button/Button.jsx";
 import SelectInput from "../select/SelectInput.jsx";
 import { Modal } from "./index.jsx";
+import { useTranslation } from "react-i18next";
 
 import eyeClose from '../../assets/button/login_btn_eye_close.png'
 import eyeOpen from '../../assets/button/login_btn_eye_open.png'
@@ -11,6 +12,8 @@ import closeImg from '../../assets/button/popup_btn_close.png'
 import plusImg from '../../assets/button/anchor_btn_add.png'
 
 const RegisterModel = ( { close, registerModelVisible,setRegisterSuccessModalVisible } ) => {
+  const { t, i18n } = useTranslation();
+
   const passRef = useRef(null)
   const [step, setStep] = useState('1');
   const [area, setArea] = useState([]);
@@ -110,12 +113,12 @@ const RegisterModel = ( { close, registerModelVisible,setRegisterSuccessModalVis
             setRegisterInfo({ ...registerInfo, headshotUrl: response.model })
             setValidRegisterStep2({ ...validRegisterStep2, headshotUrl: true })
           }
-          console.log('上傳成功:', response.data);
+          console.log(':', response.data);
         }
 
 
       } catch (error) {
-        console.error('上傳失敗:', error);
+        console.error(':', error);
       }
 
     }
@@ -237,8 +240,8 @@ const RegisterModel = ( { close, registerModelVisible,setRegisterSuccessModalVis
       <div className={'flex-1 border-dashed border-2 border-e10 rounded-1'}>
         {!image && (
           <label htmlFor={id} className=" h-24 bg-e08 flex justify-center items-center flex-col">
-            <img className={'h-5 w-5'} src={plusImg}/>
-            <div>{altText}</div>
+            <img className={'h-5 w-5 mb-1'} src={plusImg}/>
+            <div className={'text-sm'}>{altText}</div>
           </label>
         )}
         {image && (
@@ -266,13 +269,13 @@ const RegisterModel = ( { close, registerModelVisible,setRegisterSuccessModalVis
              onClick={close}>
           <img className={'w-3 h-3'} src={closeImg}/>
         </div>
-        <div id="title" className="font-bold text-lg py-1 mb-4">成為主播</div>
+        <div id="title" className="font-bold text-lg py-1 mb-4">{t('becomeHost')}</div>
         <div className="bg-e10 w-full h-[1px] mb-2"></div>
           {step === '1' && (
             <div id="step1" className="w-full ">
 
               <SelectInput
-                label={'國家和地區'}
+                label={t('countryRegion')}
                 value={area.find(e =>e.value === registerInfo.phoneCode)?.name || ''}
                 type={'text'}
                 currentType={'phoneCode'}
@@ -281,21 +284,21 @@ const RegisterModel = ( { close, registerModelVisible,setRegisterSuccessModalVis
                 optionList={area}
               />
               <Input
-                label={'手機號'}
+                label={t('phoneNumber')}
                 value={registerInfo.phone}
                 type={'tel'}
                 onChange={e => handleChange(e, 'phone')}
-                placeholder={'请输入手机号'}
+                placeholder={t('pleaseEnterPhoneNumber')}
                 pattern={inputRules.cellPhone.pattern}
                 patternText={!validRegisterStep1.phone && registerInfo.phone && inputRulesText.cellPhone.pattern}
                 errorText={phoneExist}
               />
               <Input
-                label={'密碼'}
+                label={t('password')}
                 value={registerInfo.password}
                 type={isShowPassword ? 'text' : 'password'}
                 onChange={e => handleChange(e, 'password')}
-                placeholder={'请输入密码'}
+                placeholder={t('pleaseEnterPassword')}
                 extra={
                   <div className={'h-4.5 w-4.5  absolute right-5 top-[50%] translate-y-[-50%]'} onClick={showPassword}>
                     <img className={'w-full h-full'} src={isShowPassword ? eyeOpen : eyeClose}/>
@@ -305,37 +308,37 @@ const RegisterModel = ( { close, registerModelVisible,setRegisterSuccessModalVis
                 patternText={!validRegisterStep1.password && registerInfo.password && inputRulesText.password.pattern}
               />
               <Input
-                label={'暱稱'}
+                label={t('nickname')}
                 value={registerInfo.nickname}
                 type={'text'}
                 onChange={e => handleChange(e, 'nickname')}
-                placeholder={'请输入昵称'}
+                placeholder={t('pleaseEnterNickname')}
                 pattern={inputRules.nickname.pattern}
                 maxLength={inputRules.nickname.maxlength}
                 minLength={inputRules.nickname.minlength}
                 patternText={!validRegisterStep1.nickname && registerInfo.nickname && inputRulesText.nickname.maxlength}
               />
               <SelectInput
-                label={'性別'}
+                label={t('gender')}
                 value={registerInfo.gender}
                 type={'text'}
                 currentType={'gender'}
                 onChange={selectHandleChange}
-                placeholder={'請選擇性別'}
+                placeholder={t('pleaseSelectGender')}
                 optionList={gender}
               />
               <Input
-                label={'郵箱'}
+                label={t('email')}
                 value={registerInfo.email}
                 type={'email'}
                 onChange={e => handleChange(e, 'email')}
-                placeholder={'請輸入郵箱'}
+                placeholder={t('pleaseEnterEmail')}
                 pattern={/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/}
                 patternText={!validRegisterStep1.email && registerInfo.email && '請輸入有效的電子郵件地址，例如：example@example.com'}
               />
 
               <Button
-                text={'下一步'}
+                text={t('nextStep')}
                 validObj={validRegisterStep1}
                 onClick={() => goStep2()}
               />
@@ -346,35 +349,35 @@ const RegisterModel = ( { close, registerModelVisible,setRegisterSuccessModalVis
         {step === '2' && (
           <div id="step1" className="w-full ">
             <Input
-              label={'真實姓名'}
+              label={t('realName')}
               value={registerInfo.realname}
               type={'text'}
               onChange={e => handleChange(e, 'realname')}
-              placeholder={'请输入真实姓名'}
+              placeholder={t('pleaseEnterRealName')}
             />
 
             <Input
-              label={'證件號碼'}
+              label={t('idNumber')}
               value={registerInfo.idCode}
               type={'text'}
               onChange={e => handleChange(e, 'idCode')}
-              placeholder={'请输入证件号码'}
+              placeholder={t('pleaseEnterIdNumber')}
             />
 
-            <label className="">上傳身分證信息</label>
+            <label className="text-sm">{t('uploadIdInfo')}</label>
             <div className="flex gap-2 my-2">
               <Photos
                 image={frontendIDImage}
                 id={'frontendID'}
-                altText={'正面'}
+                altText={t('frontSide')}
               />
               <Photos
                 image={backendIDImage}
                 id={'backendID'}
-                altText={'反面'}
+                altText={t('backSide')}
               />
             </div>
-            <label className="">近身照片,请提供正面面部照片</label>
+            <label className="text-sm">{t('closeUpPhoto')}</label>
             <div className="flex  my-2">
               <Photos
                 image={headshotImage}
@@ -384,8 +387,8 @@ const RegisterModel = ( { close, registerModelVisible,setRegisterSuccessModalVis
             </div>
 
             <Button
-              text={'註冊'}
-              validObj={true}
+              text={t('register')}
+              validObj={validRegisterStep2}
               onClick={() => omSubmit()}
             />
           </div>
