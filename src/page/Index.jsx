@@ -4,11 +4,13 @@ import { useTranslation } from 'react-i18next';
 import {Background} from "../components/background/index.jsx";
 import {onGestureStart, updateViewportContent} from "../hooks/web-setting.js";
 import {QrcodeModal} from "../components/qrcode-modal/index.jsx";
+import {RegisterSuccessModal} from "../components/registerSuccessModal/index.jsx";
 
 function Index() {
 
   const [registerModelVisible, setRegisterModelVisible] = useState(true);
   const [qrCodeVisible, setQrCodeVisible] = useState(false);
+  const [registerSuccessModalVisible, setRegisterSuccessModalVisible] = useState(false);
   const mediaQueryList = window.matchMedia('(orientation: landscape)')
 
   const closeRegisterModel = () => {
@@ -37,6 +39,7 @@ function Index() {
       {registerModelVisible && (
         <RegisterModel close={closeRegisterModel}/>
       )}
+      <RegisterSuccessModal registerSuccessModalVisible={registerSuccessModalVisible} setRegisterSuccessModalVisible={setRegisterSuccessModalVisible}/>
     </div>
   )
 }

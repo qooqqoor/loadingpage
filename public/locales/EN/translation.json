@@ -1,4 +1,7 @@
 {
   "becomeHost": "Become a host",
-  "downloadLottery9": "Download Lottery9"
+  "downloadLottery9": "Download Lottery9",
+  "registrationSuccess": "Registration successful",
+  "auditResultSent": "The audit result will be sent to your email",
+  "confirm": "Confirm"
 }

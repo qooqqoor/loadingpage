@@ -1,4 +1,7 @@
 {
   "becomeHost": "Maging Host",
-  "downloadLottery9": "I-download ang Lottery9"
+  "downloadLottery9": "I-download ang Lottery9",
+  "registrationSuccess": "Tagumpay ang pagpaparehistro",
+  "auditResultSent": "Ang resulta ng pag-audit ay ipapadala sa iyong email",
+  "confirm": "Kumpirmahin"
 }

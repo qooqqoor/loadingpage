@@ -1,4 +1,7 @@
 {
   "becomeHost": "成为主播",
-  "downloadLottery9": "下载"
+  "downloadLottery9": "下载",
+  "registrationSuccess": "注册成功",
+  "auditResultSent": "审核结果将寄送至您的邮箱",
+  "confirm": "确认"
 }
