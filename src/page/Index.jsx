@@ -32,7 +32,7 @@ function Index() {
 
   return (
     <div className="w-full">
-      <Background setQrCodeVisible={setQrCodeVisible}/>
+      <Background setQrCodeVisible={setQrCodeVisible} setRegisterModelVisible={setRegisterModelVisible}/>
       <QrcodeModal qrCodeVisible={qrCodeVisible} setQrCodeVisible={setQrCodeVisible}/>
       {registerModelVisible && (
         <RegisterModel close={closeRegisterModel}/>
