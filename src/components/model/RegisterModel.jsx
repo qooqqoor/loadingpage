@@ -16,6 +16,7 @@ const RegisterModel = ( { close } ) => {
   const [headshotImage, setHeadshotmage] = useState(null);
   const [gender, setGender] = useState([]);
   const [isShowPassword, setIsShowPassword] = useState(false);
+  const [inputRules, setInputRules] = useState({});
   const [registerInfo, setRegisterInfo] = useState({
     country: '',
     phone: null,
@@ -27,6 +28,15 @@ const RegisterModel = ( { close } ) => {
     idCode: null,
   });
 
+  const [validRegisterStep1, setValidRegisterStep1] = useState({
+    country: false,
+    phone: false,
+    password: false,
+    email: false,
+    nickname: false,
+    gender: false,
+  });
+
   useEffect(() => {
     setStep("1")
     getContextInfo()
@@ -36,8 +46,12 @@ const RegisterModel = ( { close } ) => {
 
   const getDoRegister = async () =>{
     const res = await apiRequest('get', 'api/user/app/passport/doRegister.html');
-    console.log(res)
+    if (res.success) {
+      setInputRules(res.jsonValid.rules)
+    }
   }
+
+  console.log(inputRules)
 
   useEffect(() => {
     if (!!passRef.current) {
@@ -66,7 +80,6 @@ const RegisterModel = ( { close } ) => {
 
       const formData = new FormData();
       formData.append('file', file); // 將文件添加到 FormData 中
-      const apiUrl = import.meta.env.VITE_API_BASE_URL;
       try {
         const response = await apiRequest('post', `/api/user/file/upload.html?objId=objId&catePath=anchorManagement`, formData);
 
@@ -102,12 +115,33 @@ const RegisterModel = ( { close } ) => {
   }
 
   const handleChange = ( e, type = null ) => {
+    const val = e.target.value;
     const parmas = {}
-    parmas[type] = e.target.value;
-
+    if (type === 'phone'){
+      validate('phone', val, inputRules.cellPhone.pattern)
+    }else if(type === 'country'){
+      validate('country', val, inputRules.cellPhone.callingCode)
+    }else if(type === 'password'){
+      validate('password', val, inputRules.cellPhone.password)
+    }else if(type === 'nickname'){
+      validate('nickname', val, inputRules.cellPhone.nickname)
+    }else if(type === 'email'){
+      const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+      validate('email', val, emailRegex)
+    }else if(type === 'gender'){
+      setValidRegisterStep1({...validRegisterStep1, gender: !!val ? true : false})
+    }
+    parmas[type] = val
     setRegisterInfo({ ...registerInfo, ...parmas });
-
   }
+
+  const validate = (type, val, reg) => {
+    const validParam = {}
+      const regex = new RegExp(reg);
+      validParam[type] = regex.test(val)
+      setValidRegisterStep1({...validRegisterStep1,...validParam})
+  }
+  console.log(validRegisterStep1)
   const showPassword = () => {
     setIsShowPassword(!isShowPassword)
   }
@@ -145,84 +179,89 @@ const RegisterModel = ( { close } ) => {
       </div>
       <div id="title" className="font-bold text-lg py-1 mb-4">成為主播</div>
       <div className="bg-e10 w-full h-[1px] mb-2"></div>
+      <form >
+        {step === '1' && (
+          <div id="step1" className="w-full ">
+            <label className="text-sm">國家和地區</label>
+            <select value={registerInfo.country} onChange={e => handleChange(e, 'country')}
+                    className="w-full my-2 px-2 h-11 bg-e08">
+              <option key={0} value={''}>請選擇</option>
+              {area.map(( item, index ) => {
+                return (
+                  <option key={index+1} value={item.value}>{item.name}</option>
+                )
+              })}
+            </select>
 
-      {step === '1' && (
-        <div id="step1" className="w-full ">
-          <label className="text-sm">國家和地區</label>
-          <select value={registerInfo.country} onChange={e => handleChange(e, 'country')}
-                  className="w-full my-2 px-2 h-11 bg-e08">
-            {area.map(( item, index ) => {
-              return (
-                <option key={index} value={item.value}>{item.name}</option>
-              )
-            })}
-          </select>
-
-          <Input
-            label={'手機號'}
-            value={registerInfo.phone}
-            type={'tel'}
-            onChange={e => handleChange(e, 'phone')}
-            placeholder={'请输入手机号'}
-          />
-          {/*<Input*/}
-          {/*  label={'密碼'}*/}
-          {/*  ref={passRef}*/}
-          {/*  value={registerInfo.password}*/}
-          {/*  type={'password'}*/}
-          {/*  onChange={e => handleChange(e, 'password')}*/}
-          {/*  extra={*/}
-          {/*    <div className={'h-4.5 w-4.5  absolute right-5 top-[50%] translate-y-[-50%]'} onClick={showPassword}>*/}
-          {/*      <img className={'w-full h-full'} src={isShowPassword ? eyeOpen : eyeClose}/>*/}
-          {/*    </div>*/}
-          {/*  }*/}
-          {/*/>*/}
-          <label className="">密碼</label>
-          <div className={'relative'}>
-            <input ref={passRef} className="w-full my-2 px-2 h-11 bg-e08" type={'password'}
-                   value={registerInfo.password} onChange={e => handleChange(e, 'password')}/>
-            <div className={'h-full w-10  flex justify-center items-center  absolute right-1 top-[50%] translate-y-[-50%]'} onClick={showPassword}>
-              <img className={'h-4.5 w-4.5'} src={isShowPassword ? eyeOpen : eyeClose}/>
+            <Input
+              label={'手機號'}
+              value={registerInfo.phone}
+              type={'tel'}
+              onChange={e => handleChange(e, 'phone')}
+              placeholder={'请输入手机号'}
+            />
+            {/*<Input*/}
+            {/*  label={'密碼'}*/}
+            {/*  ref={passRef}*/}
+            {/*  value={registerInfo.password}*/}
+            {/*  type={'password'}*/}
+            {/*  onChange={e => handleChange(e, 'password')}*/}
+            {/*  extra={*/}
+            {/*    <div className={'h-4.5 w-4.5  absolute right-5 top-[50%] translate-y-[-50%]'} onClick={showPassword}>*/}
+            {/*      <img className={'w-full h-full'} src={isShowPassword ? eyeOpen : eyeClose}/>*/}
+            {/*    </div>*/}
+            {/*  }*/}
+            {/*/>*/}
+            <label className="">密碼</label>
+            <div className={'relative'}>
+              <input ref={passRef} className="w-full my-2 px-2 h-11 bg-e08" type={'password'}
+                     value={registerInfo.password} onChange={e => handleChange(e, 'password')}/>
+              <div className={'h-full w-10  flex justify-center items-center  absolute right-1 top-[50%] translate-y-[-50%]'} onClick={showPassword}>
+                <img className={'h-4.5 w-4.5'} src={isShowPassword ? eyeOpen : eyeClose}/>
+              </div>
             </div>
-          </div>
-          <Input
+            <Input
               label={'暱稱'}
               value={registerInfo.nickname}
               type={'text'}
               onChange={e => handleChange(e, 'nickname')}
               placeholder={'请输入昵称'}
-          />
+            />
 
-          <label className="text-sm">性別</label>
-          <select className="w-full my-2 px-2 h-11 bg-e08" value={registerInfo.gendor}
-                  onChange={e => handleChange(e, 'gendor')}>
-            <option key={0} value={''}>請選擇性別</option>
-            {/* 預設空值或提示 */}
-            {gender.map(( item, index ) => (
-              <option key={index + 1} value={item.value}>{item.value}</option>
-            ))}
-          </select>
+            <label className="text-sm">性別</label>
+            <select className="w-full my-2 px-2 h-11 bg-e08" value={registerInfo.gender}
+                    onChange={e => handleChange(e, 'gender')}>
+              <option key={0} value={''}>請選擇性別</option>
+              {/* 預設空值或提示 */}
+              {gender.map(( item, index ) => (
+                <option key={index + 1} value={item.value}>{item.value}</option>
+              ))}
+            </select>
 
-          <Input
-            label={'郵箱'}
-            value={registerInfo.email}
-            type={'email'}
-            onChange={e => handleChange(e, 'email')}
-            placeholder={'請輸入郵箱'}
-          />
+            <Input
+              label={'郵箱'}
+              value={registerInfo.email}
+              type={'email'}
+              onChange={e => handleChange(e, 'email')}
+              placeholder={'請輸入郵箱'}
+            />
 
-          <div
-            className="mt-3 rounded-2 flex items-center justify-center px-2 h-11 bg-e08 bg-gradient-to-t from-b02-1 to-b02-2 text-a19"
-            onClick={() => {
-              setStep('2')
-            }}
-          >
-            下一步
+            <button
+              className={`w-full mt-3 rounded-2 flex items-center justify-center px-2 h-11 text-a19
+              ${Object.values(validRegisterStep1).every(value => value === true) 
+                ? 'bg-e08 bg-gradient-to-t from-b02-1 to-b02-2 ' 
+                : 'bg-e11'}`}
+              disabled={!Object.values(validRegisterStep1).every(value => value === true)}
+              onClick={() => {
+                setStep('2')
+              }}
+            >
+              下一步
+            </button>
           </div>
-        </div>
 
-      )}
-
+        )}
+      </form>
       {step === '2' && (
         <div id="step1" className="w-full ">
           <Input
@@ -276,29 +315,5 @@ const RegisterModel = ( { close } ) => {
     </div>
   )
 }
-//
-// const Input =
-//   ( {
-//       label,
-//       type,
-//       value,
-//       onChange,
-//       extra,
-//       ref
-//     } ) => {
-//     return (
-//       <>
-//         <label className="">{label}</label>
-//         <div className={'relative'}>
-//           <input ref={ref} className="w-full my-2 px-2 h-11 bg-e08" type={type}
-//                  value={value}
-//                  onChange={onChange}/>
-//           {extra && (extra)}
-//           {/*<div className={'h-4.5 w-4.5  absolute right-5 top-[50%] translate-y-[-50%]'} onClick={showPassword}>*/}
-//           {/*  <img className={'w-full h-full'} src={isShowPassword ? eyeOpen : eyeClose}/>*/}
-//           {/*</div>*/}
-//         </div>
-//       </>
-//     )
-//   }
+
 export default RegisterModel;

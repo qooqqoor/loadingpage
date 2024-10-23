@@ -16,9 +16,11 @@ export default {
         e03: 'rgba(99, 101, 106, 0.06)',
         e10: 'rgba(0, 0, 0, 0.08)',
         e08:'#EFEFEE',
+        e11:'#C8C8C8',
         'b02-1':'#FF724E',
         'b02-2':'#FF3A9A',
         a19:'#FCFBFB'
+
       },
       borderRadius:{
         '1': '0.125rem',
