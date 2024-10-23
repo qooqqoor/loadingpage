@@ -20,14 +20,14 @@ const Background = ({setQrCodeVisible}) =>{
       <div className={'relative w-full'}>
         <img src={`/images/${language}/img01.png`} className={'w-full h-auto '} alt="" draggable="false"/>
         <LangButton/>
-       <div className={'z-1 absolute w-full pb-[20%] translate-y-[-100%]'}>
-         <div className={'absolute bottom-0 w-auto h-full cursor-pointer transition-all hover:scale-105 active:scale-95'}
+       <div className={'z-1 absolute w-full pb-[20%] translate-y-[-100%] overflow-hidden'}>
+         <div className={'absolute bottom-0 h-full cursor-pointer transition-all hover:scale-105 active:scale-95'}
          style={{left: language === "CN" ? '1.86%' : language === "TL" ?'-1%': '0'}}>
-           <img src={`/images/${language}/btn_registeranchor.png`} className={'h-full w-full '} alt="" draggable="false"/>
+           <img src={`/images/${language}/btn_registeranchor.png`} className={'h-full w-auto '} alt="" draggable="false"/>
          </div>
-         <div className={'absolute bottom-0 w-auto h-full cursor-pointer transition-all hover:scale-105 active:scale-95'}
+         <div className={'absolute bottom-0 h-full cursor-pointer transition-all hover:scale-105 active:scale-95'}
               style={{right: language === "CN" ? '1.86%' : language === "TL" ?'-1%': '0'}}>
-           <img src={`/images/${language}/btn_download.png`} className={'h-full w-full '} alt="" draggable="false"/>
+           <img src={`/images/${language}/btn_download.png`} className={'h-full w-auto '} alt="" draggable="false"/>
          </div>
        </div>
       </div>
@@ -35,7 +35,7 @@ const Background = ({setQrCodeVisible}) =>{
       <img src={`/images/${language}/img03.png`} className={'w-full h-auto '} alt="" draggable="false"/>
       <img src={`/images/${language}/img04.png`} className={'w-full h-auto '} alt="" draggable="false"/>
 
-      <div className={'fixed bottom-0 w-full max-w-[375px]'}>
+      <div className={'fixed bottom-[-1px] w-full max-w-[375px]'}>
         <div className={'absolute bottom-0 translate-y-[calc(-208%)] right-[2.13%] w-[16%] max-w-[91.04px] h-auto cursor-pointer transition-all hover:scale-105 active:scale-95'}>
           <img src={`/images/common/btn_customer.png`} className={'h-full w-full'} alt="" draggable="false" onClick={goCustomer}/>
         </div>

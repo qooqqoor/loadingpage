@@ -15,6 +15,7 @@ function Index() {
   }
 
   useEffect(()=>{
+    updateViewportContent()
     window.addEventListener('DOMContentLoaded', updateViewportContent)
     window.addEventListener('resize', updateViewportContent)
     return()=>{
