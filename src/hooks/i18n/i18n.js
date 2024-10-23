@@ -11,9 +11,17 @@ i18n
     },
     fallbackLng: "ch",
     // 預設語言
-    lng: "ch",
+    lng: sessionStorage.getItem('local') || "ch",
     interpolation: {
       escapeValue: false,
     },
   });
+
+// i18n範例
+// const { t, i18n } = useTranslation();
+// i18n.changeLanguage('en');
+//     sessionStorage.setItem('local','en')
+// <div className={'bg-white'}> {t('becomeHost')}</div>
+
+
 export default i18n;
