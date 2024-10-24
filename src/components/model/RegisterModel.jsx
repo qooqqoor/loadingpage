@@ -286,7 +286,7 @@ const RegisterModel = ( { close, registerModelVisible,setRegisterSuccessModalVis
 
   return (
     <Modal visible={registerModelVisible} closeMaskCancel onCancel={()=>registerModelClose()} animationType={'fadeIn'} className={'w-80'}>
-    <div className={'fixed top-0 right-0 left-0 bottom-0 z-2 flex justify-center items-center'}>
+    <div className={'z-2 flex justify-center items-center'}>
       <div className=" relative p-6 bg-e01 w-80 h-auto rounded-2 flex flex-col justify-center items-center ">
         <div className={'w-7 h-7 bg-e03 rounded-1 absolute right-4 top-4 flex justify-center items-center'}
              onClick={close}>
