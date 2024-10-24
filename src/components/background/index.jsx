@@ -11,7 +11,7 @@ const Background = ({setQrCodeVisible ,setRegisterModelVisible}) =>{
   }
 
   const goCustomer = () =>{
-    window.open('https://www.google.com')
+    window.open('https://t.me/MIKE959577')
   }
 
 
@@ -36,27 +36,27 @@ const Background = ({setQrCodeVisible ,setRegisterModelVisible}) =>{
       <img src={`/images/${language}/img04.png`} className={'w-full h-auto '} alt="" draggable="false"/>
 
       <div className={'fixed bottom-[-1px] w-full max-w-[375px]'}>
-        <div className={'absolute bottom-0 translate-y-[calc(-208%)] right-[2.13%] w-[16%] max-w-[91.04px] h-auto cursor-pointer transition-all hover:scale-105 active:scale-95'}>
+        <div className={'absolute bottom-0 translate-y-[-125px] right-[8px] w-[60px]  h-auto cursor-pointer transition-all hover:scale-105 active:scale-95'}>
           <img src={`/images/common/btn_customer.png`} className={'h-full w-full'} alt="" draggable="false" onClick={goCustomer}/>
         </div>
-        <div className={'absolute bottom-0 translate-y-[calc(-98.3%)] right-[2.13%] w-[16%] max-w-[91.04px] h-auto cursor-pointer transition-all hover:scale-105 active:scale-95'} onClick={()=>setQrCodeVisible(true)}>
+        <div className={'absolute bottom-0 translate-y-[-59px] right-[8px] w-[60px] h-auto cursor-pointer transition-all hover:scale-105 active:scale-95'} onClick={()=>setQrCodeVisible(true)}>
           <img src={`/images/common/btn_qrcode.png`} className={'h-full w-full '} alt="" draggable="false"/>
         </div>
 
         <div className={'relative w-full'}>
           <img src={`/images/common/img_footer_bg.png`} className={'w-full h-auto '} alt="" draggable="false"/>
           <div className={'absolute bottom-0 left-0 w-full h-[95%]  flex items-center justify-center '} >
-            <div className={'w-[7.467%] h-auto mr-[1.6%] cursor-pointer'} onClick={goWeb}>
-              <img src={`/images/common/img_footer_logo.png`} className={'h-full w-full   '} alt="" draggable="false"/>
+            <div className={'w-[28px]  mr-[6px] cursor-pointer'} onClick={goWeb}>
+              <img src={`/images/common/img_footer_logo.png`} className={'h-full w-auto'} alt="" draggable="false"/>
             </div>
-            <div className={'cursor-pointer font-bold text-[#333333] mr-[4.2%] text-[14px] leading-[17px]'} onClick={goWeb}>
+            <div className={'cursor-pointer font-bold text-[#333333] mr-[16px] text-[14px] leading-[17px]'} onClick={goWeb}>
               www.Lottery9.com
             </div>
 
-            <div className={'w-[7.467%] h-auto mr-[1.6%] cursor-pointer'}>
-              <img src={`/images/common/img_footer_telegram.png`} className={'h-full w-full  '} alt="" draggable="false"/>
+            <div className={'w-[28px]  mr-[6px] cursor-pointer'} onClick={goCustomer}>
+              <img src={`/images/common/img_footer_telegram.png`} className={'h-auto w-full  '} alt="" draggable="false"/>
             </div>
-            <div className={'cursor-pointer font-bold text-[#333333] text-[14px] leading-[17px]'}>
+            <div className={'cursor-pointer font-bold text-[#333333] text-[14px] leading-[17px]'} onClick={goCustomer}>
               MIKE959577
             </div>
           </div>
