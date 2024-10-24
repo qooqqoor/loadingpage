@@ -15,7 +15,7 @@ const RegisterModel = ( { close, registerModelVisible,setRegisterSuccessModalVis
   const { t, i18n } = useTranslation();
 
   const passRef = useRef(null)
-  const [step, setStep] = useState('1');
+  const [step, setStep] = useState('2');
   const [area, setArea] = useState([]);
   const [frontendIDImage, setFrontendIDImage] = useState(null);
   const [backendIDImage, setBackendIDImage] = useState(null);
@@ -423,6 +423,14 @@ const RegisterModel = ( { close, registerModelVisible,setRegisterSuccessModalVis
                 id={'headshot'}
                 altText={''}
               />
+            </div>
+            <div className={'text-xs'}>
+              {t('uploadRules')}
+              <br/>
+              {t('supportedFormats')}
+              <br/>
+              {t('fileSizeLimit')}
+
             </div>
 
             <Button
