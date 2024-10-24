@@ -25,7 +25,7 @@ function Index() {
   const getAppDownloadUrl = async () => {
     const res = await apiRequest('get', '/api/user/anchor/appDownloadUrl.html');
     if (res.success) {
-      setAppDownLoadWeb(res.data.model)
+      setAppDownLoadWeb(res.model)
     }
   }
 

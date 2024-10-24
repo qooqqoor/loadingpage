@@ -85,7 +85,6 @@ const LangButton = () =>{
   const changeLang = (lang) =>{
     i18n.changeLanguage(lang);
     sessionStorage.setItem('local',lang)
-    window.reload()
   }
   return(
     <div
