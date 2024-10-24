@@ -160,6 +160,8 @@ const RegisterModel = ( { close, registerModelVisible,setRegisterSuccessModalVis
 
 
       } catch (error) {
+        alert(error)
+
         console.error(':', error);
       }
 
@@ -431,9 +433,9 @@ const RegisterModel = ( { close, registerModelVisible,setRegisterSuccessModalVis
             <div className={'text-xs'}>
               {t('uploadRules')}
               <br/>
-              {t('supportedFormats')}
+              {`1. ${t('supportedFormats')}`}
               <br/>
-              {t('fileSizeLimit')}
+              {`2. ${t('fileSizeLimit')}`}
             </div>
 
             <Button

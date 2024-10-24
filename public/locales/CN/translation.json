@@ -29,7 +29,7 @@
   "register": "註冊",
   "emailErrorMessage": "请输入有效的电子邮件地址，例如：example@example.com",
   "pleaseSelect": "请选择",
-  "supportedFormats": "1. 支持 png、jpg 格式",
+  "supportedFormats": "支持 png、jpg 格式",
   "uploadRules": "身分证与近身照片上传规则：",
-  "fileSizeLimit":  "2. 图片大小不得超过 2MB。"
+  "fileSizeLimit":  "图片大小不得超过 2MB。"
 }

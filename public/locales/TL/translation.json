@@ -29,7 +29,7 @@
   "register": "Magrehistro",
   "emailErrorMessage": "Mangyaring maglagay ng wastong email address, halimbawa: example@example.com",
   "pleaseSelect": "Pumili",
-  "supportedFormats": "1. Suportado ang mga format na png at jpg",
+  "supportedFormats": "Suportado ang mga format na png at jpg",
   "uploadRules": "Mga patakaran sa pag-upload ng ID card at malapitan na larawan:",
-  "fileSizeLimit":  "2. Ang laki ng larawan ay hindi dapat lumampas sa 2MB."
+  "fileSizeLimit":  "Ang laki ng larawan ay hindi dapat lumampas sa 2MB."
 }
