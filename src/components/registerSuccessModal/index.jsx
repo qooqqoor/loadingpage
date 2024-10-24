@@ -11,7 +11,7 @@ const RegisterSuccessModal = ({registerSuccessModalVisible,setRegisterSuccessMod
           <div className={'mt-[9.5px] text-[14px] leading-[16.5px] text-[#242426] text-center'}>{t("auditResultSent")}</div>
         </div>
         <div className={'w-full h-[44px] rounded-[8px] flex items-center justify-center text-[#FCFBFB]'} style={{background: 'linear-gradient(to top, #FF724E, #FF3A9A)'
-        }}>
+        }} onClick={()=>{setRegisterSuccessModalVisible(false)}}>
           {t("confirm")}
         </div>
         <div className={'z-1 absolute top-[8px] right-[8px] h-[28px] w-[28px] flex items-center justify-center'} onClick={()=>{setRegisterSuccessModalVisible(false)}}>

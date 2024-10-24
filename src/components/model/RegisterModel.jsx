@@ -122,6 +122,10 @@ const RegisterModel = ( { close, registerModelVisible,setRegisterSuccessModalVis
 
   const handleCapture = async ( event, pic ) => {
     const file = event.target.files[0]; // 獲取用戶拍攝的圖片
+    if (file && file.size > 2 * 1024 * 1024) {  // 檢查文件大小是否超過 2MB
+      alert(t('fileSizeLimit'));
+      return;
+    }
     if (file) {
       const reader = new FileReader();
       reader.onloadend = () => {
