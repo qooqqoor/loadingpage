@@ -79,6 +79,21 @@ const RegisterModel = ( { close, registerModelVisible,setRegisterSuccessModalVis
       headshotUrl: '',
       phoneCode: ''
     })
+    setValidRegisterStep1({
+      phoneCode: false,
+      phone: false,
+      password: false,
+      email: false,
+      nickname: false,
+      gender: false,
+    })
+    setValidRegisterStep2({
+      realname: false,
+      idCode: false,
+      frontIDUrl: false,
+      backIDUrl: false,
+      headshotUrl: false
+    })
     setStep('1')
     setFrontendIDImage(null)
     setBackendIDImage(null)
@@ -289,7 +304,7 @@ const RegisterModel = ( { close, registerModelVisible,setRegisterSuccessModalVis
     <div className={'z-2 flex justify-center items-center'}>
       <div className=" relative p-6 bg-e01 w-80 h-auto rounded-2 flex flex-col justify-center items-center ">
         <div className={'w-7 h-7 bg-e03 rounded-1 absolute right-4 top-4 flex justify-center items-center'}
-             onClick={close}>
+             onClick={registerModelClose}>
           <img className={'w-3 h-3'} src={closeImg}/>
         </div>
         <div id="title" className="font-bold text-lg py-1 mb-4">{t('becomeHost')}</div>
