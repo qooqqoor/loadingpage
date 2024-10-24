@@ -294,7 +294,7 @@ const RegisterModel = ( { close, registerModelVisible,setRegisterSuccessModalVis
         </div>
         <div id="title" className="font-bold text-lg py-1 mb-4">{t('becomeHost')}</div>
         <div className="bg-e10 w-full h-[1px] mb-2"></div>
-        <div className={'w-full max-h-[6  0vh] h-auto overflow-scroll'}>
+        <div className={'w-full max-h-[60vh] h-auto overflow-scroll'}>
           {step === '1' && (
             <div id="step1" className="w-full ">
 
