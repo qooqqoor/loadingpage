@@ -27,16 +27,16 @@ const RegisterModel = ( { close, registerModelVisible,setRegisterSuccessModalVis
   const [phoneExist, setPhoneExist] = useState(null);
   const [registerInfo, setRegisterInfo] = useState({
     country: '',
-    phone: null,
+    phone: '',
     password: '',
     email: '',
     nickname: '',
     gender: '',
-    realname: null,
-    idCode: null,
-    frontIDUrl: null,
-    backIDUrl: null,
-    headshotUrl: null,
+    realname: '',
+    idCode: '',
+    frontIDUrl: '',
+    backIDUrl: '',
+    headshotUrl: '',
     phoneCode: ''
   });
   const [validRegisterStep1, setValidRegisterStep1] = useState({
@@ -289,7 +289,7 @@ const RegisterModel = ( { close, registerModelVisible,setRegisterSuccessModalVis
                 type={'tel'}
                 onChange={e => handleChange(e, 'phone')}
                 placeholder={t('pleaseEnterPhoneNumber')}
-                pattern={inputRules.cellPhone.pattern}
+                pattern={inputRules.cellPhone?.pattern}
                 patternText={!validRegisterStep1.phone && registerInfo.phone && inputRulesText.cellPhone.pattern}
                 errorText={phoneExist}
               />
@@ -304,7 +304,7 @@ const RegisterModel = ( { close, registerModelVisible,setRegisterSuccessModalVis
                     <img className={'w-full h-full'} src={isShowPassword ? eyeOpen : eyeClose}/>
                   </div>
                 }
-                pattern={inputRules.password.pattern}
+                pattern={inputRules.password?.pattern}
                 patternText={!validRegisterStep1.password && registerInfo.password && inputRulesText.password.pattern}
               />
               <Input
@@ -313,9 +313,9 @@ const RegisterModel = ( { close, registerModelVisible,setRegisterSuccessModalVis
                 type={'text'}
                 onChange={e => handleChange(e, 'nickname')}
                 placeholder={t('pleaseEnterNickname')}
-                pattern={inputRules.nickname.pattern}
-                maxLength={inputRules.nickname.maxlength}
-                minLength={inputRules.nickname.minlength}
+                pattern={inputRules.nickname?.pattern}
+                maxLength={inputRules.nickname?.maxlength}
+                minLength={inputRules.nickname?.minlength}
                 patternText={!validRegisterStep1.nickname && registerInfo.nickname && inputRulesText.nickname.maxlength}
               />
               <SelectInput
