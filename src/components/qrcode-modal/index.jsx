@@ -1,13 +1,13 @@
-import {useEffect, useState} from "react";
-import { Transition } from 'react-transition-group'
 import {Modal} from "../model/index.jsx";
 import {useTranslation} from "react-i18next";
 import QRCode from "react-qr-code";
+import {isIos} from "../../hooks/web-setting.js";
 
-const QrcodeModal = ({qrCodeVisible, setQrCodeVisible}) =>{
-  const { t, i18n } = useTranslation();
+const QrcodeModal = ({qrCodeVisible, setQrCodeVisible, appDownLoadWeb}) =>{
+  const { t} = useTranslation();
 
-  const qrcodeWeb = 'https://google.com'
+  const qrcodeWeb =  isIos ?appDownLoadWeb.iosAppDownloadUrl:　appDownLoadWeb.androidAppDownloadUrl
+
 
 
   return <Modal visible={qrCodeVisible} closeMaskCancel onCancel={()=>setQrCodeVisible(false)} animationType={'fadeIn'}>

@@ -1,7 +1,8 @@
 import {useTranslation} from "react-i18next";
 import {useState} from "react";
+import {isIos} from "../../hooks/web-setting.js";
 
-const Background = ({setQrCodeVisible ,setRegisterModelVisible}) =>{
+const Background = ({setQrCodeVisible ,setRegisterModelVisible,appDownLoadWeb}) =>{
   const { t, i18n } = useTranslation();
   const {language} = i18n
 
@@ -13,6 +14,16 @@ const Background = ({setQrCodeVisible ,setRegisterModelVisible}) =>{
   const goCustomer = () =>{
     window.open('https://t.me/MIKE959577')
   }
+
+  const goAppDownLoad = () =>{
+    if(isIos){
+      window.open(appDownLoadWeb.iosAppDownloadUrl)
+    }else{
+      window.open(appDownLoadWeb.androidAppDownloadUrl)
+    }
+  }
+
+
 
 
   return <div className={'w-full bg-[#181B21] '}>
@@ -26,7 +37,7 @@ const Background = ({setQrCodeVisible ,setRegisterModelVisible}) =>{
            <img src={`/images/${language}/btn_registeranchor.png`} className={'h-full w-auto '} alt="" draggable="false"/>
          </div>
          <div className={'absolute bottom-0 h-full cursor-pointer transition-all hover:scale-105 active:scale-95'}
-              style={{right: language === "CN" ? '1.86%' : language === "TL" ?'-1%': '0'}}>
+              style={{right: language === "CN" ? '1.86%' : language === "TL" ?'-1%': '0'}} onClick={goAppDownLoad}>
            <img src={`/images/${language}/btn_download.png`} className={'h-full w-auto '} alt="" draggable="false"/>
          </div>
        </div>
@@ -40,7 +51,7 @@ const Background = ({setQrCodeVisible ,setRegisterModelVisible}) =>{
           <img src={`/images/common/btn_customer.png`} className={'h-full w-full'} alt="" draggable="false" onClick={goCustomer}/>
         </div>
         <div className={'absolute bottom-0 translate-y-[-59px] right-[8px] w-[60px] h-auto cursor-pointer transition-all hover:scale-105 active:scale-95'} onClick={()=>setQrCodeVisible(true)}>
-          <img src={`/images/common/btn_qrcode.png`} className={'h-full w-full '} alt="" draggable="false"/>
+          <img src={`/images/common/btn_qrcode.png`} className={'h-full w-full '} alt="" draggable="false" />
         </div>
 
         <div className={'relative w-full'}>

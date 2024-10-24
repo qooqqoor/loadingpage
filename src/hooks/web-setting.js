@@ -24,4 +24,9 @@ function onGestureStart(ev) {
   ev.preventDefault() // 阻止縮放手勢
 }
 
+
+//判斷是否是IOS
+export const isIos = /iPhone|iPad|iPod|Mac/i.test(navigator.userAgent || '')
+
+
 export {updateViewportContent,onGestureStart}
