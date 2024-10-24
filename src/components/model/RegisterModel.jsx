@@ -290,7 +290,7 @@ const RegisterModel = ( { close, registerModelVisible,setRegisterSuccessModalVis
         <input
           id={id}
           type="file"
-          accept="image/*"
+          accept="image/jpeg, image/png"
           onChange={event => handleCapture(event, id)}
           className={'hidden'}
         />
