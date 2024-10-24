@@ -28,5 +28,8 @@
   "closeUpPhoto": "Close-up photo, please provide a front-facing facial photo",
   "register": "Register",
   "emailErrorMessage": "Please enter a valid email address, for example: example@example.com ",
-  "pleaseSelect": "Please select"
+  "pleaseSelect": "Please select",
+  "supportedFormats": "1. Supports png and jpg formats",
+  "uploadRules": "ID card and close-up photo upload rules:",
+  "fileSizeLimit": "2. The image size must not exceed 2MB."
 }
