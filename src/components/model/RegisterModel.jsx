@@ -61,7 +61,30 @@ const RegisterModel = ( { close, registerModelVisible,setRegisterSuccessModalVis
     getContextInfo()
     getGender()
     getDoRegister()
+
   }, [])
+
+  const registerModelClose =() =>{
+    setRegisterInfo({
+      country: '',
+      phone: '',
+      password: '',
+      email: '',
+      nickname: '',
+      gender: '',
+      realname: '',
+      idCode: '',
+      frontIDUrl: '',
+      backIDUrl: '',
+      headshotUrl: '',
+      phoneCode: ''
+    })
+    setStep('1')
+    setFrontendIDImage(null)
+    setBackendIDImage(null)
+    setHeadshotmage(null)
+    close()
+  }
 
   const getDoRegister = async () => {
     const res = await apiRequest('get', 'api/user/app/passport/doRegister.html');
@@ -216,17 +239,17 @@ const RegisterModel = ( { close, registerModelVisible,setRegisterSuccessModalVis
       });
     if (res.success){
       setRegisterSuccessModalVisible(true)
-      close()
+      registerModelClose()
     }
   }
 
   const goStep2 = async () => {
     //這個API沒辦法搓 很奇怪
+    const formData = new FormData();
 
-    const res = await apiRequest('post', '/api/user/app/passport/cellPhoneExistsForRegister.html',{
-      callingCode: registerInfo.phoneCode,
-      cellPhone: registerInfo.phone
-    })
+    formData.append('callingCode', registerInfo.phoneCode);
+    formData.append('cellPhone', registerInfo.phone);
+    const res = await apiRequest('post', '/api/user/app/passport/cellPhoneExistsForRegister.html',formData)
     if(!!res){
       setStep('2')
     }else {
@@ -262,7 +285,7 @@ const RegisterModel = ( { close, registerModelVisible,setRegisterSuccessModalVis
   if (area.length === 0) return
 
   return (
-    <Modal visible={registerModelVisible} closeMaskCancel onCancel={()=>close} animationType={'fadeIn'} className={'w-80'}>
+    <Modal visible={registerModelVisible} closeMaskCancel onCancel={()=>registerModelClose()} animationType={'fadeIn'} className={'w-80'}>
     <div className={'fixed top-0 right-0 left-0 bottom-0 z-2 flex justify-center items-center'}>
       <div className=" relative p-6 bg-e01 w-80 h-auto rounded-2 flex flex-col justify-center items-center ">
         <div className={'w-7 h-7 bg-e03 rounded-1 absolute right-4 top-4 flex justify-center items-center'}
@@ -271,6 +294,7 @@ const RegisterModel = ( { close, registerModelVisible,setRegisterSuccessModalVis
         </div>
         <div id="title" className="font-bold text-lg py-1 mb-4">{t('becomeHost')}</div>
         <div className="bg-e10 w-full h-[1px] mb-2"></div>
+        <div className={'w-full max-h-[6  0vh] h-auto overflow-scroll'}>
           {step === '1' && (
             <div id="step1" className="w-full ">
 
@@ -393,6 +417,7 @@ const RegisterModel = ( { close, registerModelVisible,setRegisterSuccessModalVis
             />
           </div>
         )}
+      </div>
       </div>
     </div>
     </Modal>
