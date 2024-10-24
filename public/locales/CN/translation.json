@@ -27,5 +27,6 @@
   "backSide": "反面",
   "closeUpPhoto": "近身照片，请提供正面面部照片",
   "register": "註冊",
-  "emailErrorMessage": "请输入有效的电子邮件地址，例如：example@example.com"
+  "emailErrorMessage": "请输入有效的电子邮件地址，例如：example@example.com",
+  "pleaseSelect": "请选择"
 }

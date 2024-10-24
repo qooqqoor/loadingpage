@@ -280,7 +280,7 @@ const RegisterModel = ( { close, registerModelVisible,setRegisterSuccessModalVis
                 type={'text'}
                 currentType={'phoneCode'}
                 onChange={selectHandleChange}
-                placeholder={'請選擇'}
+                placeholder={t('pleaseSelect')}
                 optionList={area}
               />
               <Input
