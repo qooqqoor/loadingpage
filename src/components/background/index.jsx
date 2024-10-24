@@ -11,7 +11,7 @@ const Background = ({setQrCodeVisible ,setRegisterModelVisible}) =>{
   }
 
   const goCustomer = () =>{
-    window.open('https://www.google.com')
+    window.open('https://t.me/MIKE959577')
   }
 
 
@@ -53,10 +53,10 @@ const Background = ({setQrCodeVisible ,setRegisterModelVisible}) =>{
               www.Lottery9.com
             </div>
 
-            <div className={'w-[28px]  mr-[6px] cursor-pointer'}>
+            <div className={'w-[28px]  mr-[6px] cursor-pointer'} onClick={goCustomer}>
               <img src={`/images/common/img_footer_telegram.png`} className={'h-auto w-full  '} alt="" draggable="false"/>
             </div>
-            <div className={'cursor-pointer font-bold text-[#333333] text-[14px] leading-[17px]'}>
+            <div className={'cursor-pointer font-bold text-[#333333] text-[14px] leading-[17px]'} onClick={goCustomer}>
               MIKE959577
             </div>
           </div>
