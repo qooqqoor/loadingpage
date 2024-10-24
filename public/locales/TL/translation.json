@@ -27,5 +27,6 @@
   "backSide": "Likuran",
   "closeUpPhoto": "Malapitan na larawan, pakibigay ang harapang larawan ng mukha",
   "register": "Magrehistro",
-  "emailErrorMessage": "Mangyaring maglagay ng wastong email address, halimbawa: example@example.com"
+  "emailErrorMessage": "Mangyaring maglagay ng wastong email address, halimbawa: example@example.com",
+  "pleaseSelect": "Pumili"
 }
