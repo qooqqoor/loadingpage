@@ -223,15 +223,15 @@ const RegisterModel = ( { close, registerModelVisible,setRegisterSuccessModalVis
   const goStep2 = async () => {
     //這個API沒辦法搓 很奇怪
 
-    // const res = await apiRequest('post', '/api/user/app/passport/cellPhoneExistsForRegister.html',{
-    //   callingCode: registerInfo.phoneCode,
-    //   cellPhone: registerInfo.phone
-    // })
-    // if(!!res){
+    const res = await apiRequest('post', '/api/user/app/passport/cellPhoneExistsForRegister.html',{
+      callingCode: registerInfo.phoneCode,
+      cellPhone: registerInfo.phone
+    })
+    if(!!res){
       setStep('2')
-    // }else {
+    }else {
     setPhoneExist(inputRulesText.cellPhone.remote)
-  // }
+  }
 }
 
 
